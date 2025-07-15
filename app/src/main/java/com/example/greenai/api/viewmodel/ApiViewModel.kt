@@ -72,4 +72,9 @@ class ApiViewModel @Inject constructor(private val repository: ApiRepository): V
         }
     }
 
+    fun logout(){
+        loggedInUser = null
+        greenHouseParameters = emptyList()
+    }
+
 }

@@ -10,4 +10,10 @@ sealed class Screens: NavKey {
     data object HomeScreen: Screens()
 
     data class ZoneOverview(val nodeParameters: ApiModel): Screens()
+
+    data object SettingsScreen: Screens()
+
+    data object AboutUsScreen: Screens()
+
+    data object AboutProjectScreen: Screens()
 }

@@ -12,21 +12,27 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.greenai.api.ApiModel
+import com.example.greenai.navigation.MainNavigationViewModel
 
 @Composable
 fun ZoneOverview(nodeParameters: ApiModel){
-    val valuesMap = mapOf<Any, String>(
-        nodeParameters.temperature_area to "Temp (Area)",
-        nodeParameters.humidity_area to "Humidity (Area)",
-        nodeParameters.temperature_soil to "Temp (Soil)",
-        nodeParameters.humidity_soil to "Humidity (Soil)",
-        nodeParameters.soil to "Soil Moisture",
-        nodeParameters.rain to "Rain",
-        nodeParameters.pressure_kpa to "Pressure (Kpa)",
-        nodeParameters.status to "Status"
+
+    val valuesMap = mapOf<String, Any>(
+        "Temp (Area)" to nodeParameters.temperature_area,
+        "Humidity (Area)" to nodeParameters.humidity_area,
+        "Temp (Soil)" to nodeParameters.temperature_soil,
+        "Humidity (Soil)" to nodeParameters.humidity_soil,
+        "Soil Moisture" to nodeParameters.soil,
+        "Rain" to nodeParameters.rain,
+        "Pressure (Kpa)" to nodeParameters.pressure_kpa,
+        "Status" to nodeParameters.status
     )
+
     val keys = valuesMap.keys.toList()
+    println(keys[2])
+    println(valuesMap[keys[2]].toString())
     Scaffold(
         topBar = {
             TopBar("Zone ${nodeParameters.node_id} Overview")
@@ -43,7 +49,7 @@ fun ZoneOverview(nodeParameters: ApiModel){
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                items(8) {
+                items(keys.size) {
                     ParameterCard(keys[it], valuesMap[keys[it]].toString())
                 }
             }

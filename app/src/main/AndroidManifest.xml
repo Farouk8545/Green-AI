@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GreenAI"
         tools:targetApi="31">
-        <activityd
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
@@ -25,7 +25,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activityd>
+        </activity>
     </application>
 
 </manifest>

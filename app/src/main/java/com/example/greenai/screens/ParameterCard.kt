@@ -27,10 +27,12 @@ import com.example.greenai.ui.theme.Red
 import com.example.greenai.ui.theme.Yellow
 
 @Composable
-fun ParameterCard(parameter: Any, parameterName: String){
+fun ParameterCard(parameterName: String, parameter: Any){
     val numericValue = when(parameter){
-        is Float -> parameter.toInt()
-        else -> parameter
+        is Int -> parameter.toFloat()
+        is String -> parameter.toFloatOrNull() ?: -1f
+        is Float -> parameter.toFloat()
+        else -> -1f
     }
     val value = when(parameterName){
         "Temp (Area)" -> "$parameter °C"
@@ -40,7 +42,7 @@ fun ParameterCard(parameter: Any, parameterName: String){
         "Soil Moisture" -> "$parameter %"
         "Rain" -> "$parameter mm"
         "Pressure (Kpa)" -> "$parameter kpa"
-        "Status" -> if(parameter == 1) "On" else "Off"
+        "Status" -> if(parameter.toString() == "1") "On" else "Off"
         else -> parameter.toString()
     }
     val icon = when(parameterName){
@@ -54,9 +56,11 @@ fun ParameterCard(parameter: Any, parameterName: String){
         "Status" -> painterResource(R.drawable.onoff)
         else -> painterResource(R.drawable.water_droplet)
     }
-    val backgroundColor = if(numericValue in 0..60) Blue
-    else if(numericValue in 60..70) LightGreen
-    else if(numericValue in 70..80) Yellow
+    val backgroundColor = if (parameterName == "Status"){
+        if(parameter.toString() == "1") LightGreen else Red
+    } else if(numericValue in 0f..40f) Blue
+    else if(numericValue in 40f..70f) LightGreen
+    else if(numericValue in 70f..90f) Yellow
     else Red
     Card (
         modifier = Modifier.background(backgroundColor, RoundedCornerShape(16.dp)),
